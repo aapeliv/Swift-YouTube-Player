@@ -21,56 +21,57 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    @IBAction func play(sender: UIButton) {
+    @IBAction func play(_ sender: Any) {
         if playerView.ready {
             if playerView.playerState != YouTubePlayerState.Playing {
                 playerView.play()
-                playButton.setTitle("Pause", forState: .Normal)
+                playButton.setTitle("Pause", for: [])
             } else {
                 playerView.pause()
-                playButton.setTitle("Play", forState: .Normal)
+                playButton.setTitle("Play", for: [])
             }
         }
     }
 
-    @IBAction func prev(sender: UIButton) {
+    @IBAction func prev(_ sender: Any) {
         playerView.previousVideo()
     }
 
-    @IBAction func next(sender: UIButton) {
+    @IBAction func next(_ sender: Any) {
         playerView.nextVideo()
     }
 
-    @IBAction func loadVideo(sender: UIButton) {
+    @IBAction func loadVideo(_ sender: Any) {
+        print("yo")
         playerView.playerVars = [
-            "playsinline": "1",
-            "controls": "0",
-            "showinfo": "0"
+            "playsinline": "1" as AnyObject,
+            "controls": "1" as AnyObject,
+            "showinfo": "0" as AnyObject
         ]
-        playerView.loadVideoID("wQg3bXrVLtg")
+        playerView.loadVideoID("j7NIdg9mof0")
     }
 
-    @IBAction func loadPlaylist(sender: UIButton) {
+    @IBAction func loadPlaylist(_ sender: Any) {
         playerView.loadPlaylistID("RDe-ORhEE9VVg")
     }
     
-    @IBAction func currentTime(sender: UIButton) {
+    @IBAction func currentTime(_ sender: Any) {
         let title = String(format: "Current Time %@", playerView.getCurrentTime() ?? "0")
-        currentTimeButton.setTitle(title, forState: .Normal)
+        currentTimeButton.setTitle(title, for: [])
     }
     
-    @IBAction func duration(sender: UIButton) {
+    @IBAction func duration(_ sender: Any) {
         let title = String(format: "Duration %@", playerView.getDuration() ?? "0")
-        durationButton.setTitle(title, forState: .Normal)
+        durationButton.setTitle(title, for: [])
     }
 
     func showAlert(message: String) {
-        self.presentViewController(alertWithMessage(message), animated: true, completion: nil)
+        self.present(alertWithMessage(message: message), animated: true, completion: nil)
     }
 
     func alertWithMessage(message: String) -> UIAlertController {
-        let alertController =  UIAlertController(title: "", message: message, preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+        let alertController =  UIAlertController(title: "", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
 
         return alertController
     }
